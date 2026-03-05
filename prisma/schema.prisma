@@ -1,0 +1,141 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum EmploymentStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum AssignmentStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum ConnectorStatus {
+  DRAFT
+  CONNECTED
+  ERROR
+}
+
+model LoginUser {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String
+  fullName  String
+  role      String   @default("ADMIN")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AppSetting {
+  id               String   @id
+  reportEmail      Boolean  @default(true)
+  reportSlack      Boolean  @default(true)
+  reportTeams      Boolean  @default(false)
+  reportTelegram   Boolean  @default(false)
+  reportMessageTemplate String @default("Ghost Labor report finished. Run {{run_id}} status: {{status}}. Findings: {{findings}}. Potential monthly savings: {{savings}}. Finished at: {{finished_at}}.")
+  reportToEmails   String   @default("")
+  smtpHost         String   @default("")
+  smtpPort         Int      @default(587)
+  smtpUser         String   @default("")
+  smtpPass         String   @default("")
+  smtpSecure       Boolean  @default(false)
+  smtpFromEmail    String   @default("")
+  smtpReplyTo      String   @default("")
+  slackWebhookUrl  String   @default("")
+  teamsWebhookUrl  String   @default("")
+  slackChannel     String   @default("")
+  telegramBotToken String   @default("")
+  telegramChatId   String   @default("")
+  scheduleHours    Int      @default(24)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Employee {
+  id               String           @id @default(cuid())
+  email            String           @unique
+  fullName         String
+  department       String
+  role             String
+  employmentStatus EmploymentStatus @default(ACTIVE)
+  leftAt           DateTime?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  seats            SaaSSeat[]
+}
+
+model SaaSApp {
+  id                    String          @id @default(cuid())
+  slug                  String          @unique
+  name                  String
+  provider              String          @default("Unknown")
+  apiBaseUrl            String?
+  apiToken              String?
+  connectorStatus       ConnectorStatus @default(DRAFT)
+  lastSuccessfulSyncAt  DateTime?
+  lastValidationAt      DateTime?
+  lastValidationMessage String?
+  monthlySeatPrice      Decimal         @db.Decimal(10, 2)
+  inactivityDays        Int             @default(90)
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+
+  seats                 SaaSSeat[]
+}
+
+model SaaSSeat {
+  id               String           @id @default(cuid())
+  appId            String
+  employeeId       String?
+  assigneeEmail    String
+  assignmentStatus AssignmentStatus @default(ACTIVE)
+  externalSeatId   String?
+  lastLoginAt      DateTime?
+  firstAssignedAt  DateTime?
+  lastSyncedAt     DateTime?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  app              SaaSApp          @relation(fields: [appId], references: [id], onDelete: Cascade)
+  employee         Employee?        @relation(fields: [employeeId], references: [id], onDelete: SetNull)
+
+  @@index([appId, assignmentStatus])
+  @@index([employeeId])
+  @@index([assigneeEmail])
+}
+
+model AuditRun {
+  id                   String           @id @default(cuid())
+  startedAt            DateTime         @default(now())
+  finishedAt           DateTime?
+  status               String           @default("RUNNING")
+  totalFindings        Int              @default(0)
+  estimatedMonthlySave Decimal          @default(0) @db.Decimal(10, 2)
+
+  findings             WasteFinding[]
+}
+
+model WasteFinding {
+  id                   String    @id @default(cuid())
+  auditRunId           String
+  appId                String
+  seatId               String
+  reason               String
+  inactivityDays       Int?
+  monthlySeatPrice     Decimal   @db.Decimal(10, 2)
+  estimatedMonthlySave Decimal   @db.Decimal(10, 2)
+  createdAt            DateTime  @default(now())
+
+  auditRun             AuditRun  @relation(fields: [auditRunId], references: [id], onDelete: Cascade)
+
+  @@index([auditRunId])
+  @@index([appId])
+}

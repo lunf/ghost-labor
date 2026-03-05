@@ -1,0 +1,41 @@
+{
+  "name": "ghost-labor",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "dev": "prisma generate && next dev",
+    "build": "next build",
+    "start": "prisma generate && next start",
+    "lint": "next lint",
+    "worker": "prisma generate && tsx scripts/worker.ts",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:seed": "prisma generate && tsx prisma/seed.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.4.1",
+    "next": "^15.1.0",
+    "pg-boss": "^10.2.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "zod": "^3.24.2",
+    "nodemailer": "^6.9.16"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "eslint": "^9.21.0",
+    "eslint-config-next": "^15.1.0",
+    "prisma": "^6.4.1",
+    "tsx": "^4.19.3",
+    "typescript": "^5.7.3",
+    "@types/nodemailer": "^6.4.17"
+  },
+  "prisma": {
+    "seed": "prisma generate && tsx prisma/seed.ts"
+  }
+}
