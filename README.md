@@ -32,7 +32,7 @@ Finance teams can see immediate ROI with actionable findings like:
 ## Local setup
 1. Start Postgres with Docker Compose (required before Prisma migrate):
    ```bash
-   docker compose -f docker/docker-compose.yml up -d db
+   docker compose -f docker/docker-compose.local.yml up -d db
    ```
 2. Install dependencies:
    ```bash
@@ -108,7 +108,23 @@ npm run worker
 
 To stop the local Postgres container:
 ```bash
-docker compose -f docker/docker-compose.yml stop db
+docker compose -f docker/docker-compose.local.yml stop db
+```
+
+## Docker Compose files
+- `docker/docker-compose.local.yml`: local development (builds image from source)
+- `docker/docker-compose.dockerhub.yml`: deploy using a prebuilt Docker Hub image
+- `docker/push-dockerhub.sh`: build + push app image to Docker Hub
+
+Run with Docker Hub image:
+```bash
+docker compose -f docker/docker-compose.dockerhub.yml up -d
+```
+
+Push app image to Docker Hub:
+```bash
+chmod +x docker/push-dockerhub.sh
+./docker/push-dockerhub.sh <dockerhub_user> [version]
 ```
 
 ## Product flow

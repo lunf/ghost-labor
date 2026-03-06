@@ -29,8 +29,13 @@ export async function getBoss() {
     await globalThis.boss.start();
     await globalThis.boss.createQueue(QUEUE.runAudit);
 
-    globalThis.boss.work(QUEUE.runAudit, async (job) => {
-      const runId = String(job.data?.runId ?? "");
+    globalThis.boss.work(QUEUE.runAudit, async (jobOrJobs) => {
+      const job = Array.isArray(jobOrJobs) ? jobOrJobs[0] : jobOrJobs;
+      if (!job) {
+        return;
+      }
+
+      const runId = String((job.data as { runId?: string } | undefined)?.runId ?? "");
       if (!runId) {
         throw new Error("Missing runId in queued audit job");
       }

@@ -79,7 +79,7 @@ export default async function RunReportsPage() {
                   <td>{formatDate(run.finishedAt)}</td>
                   <td>{run.status}</td>
                   <td>{run.totalFindings}</td>
-                  <td>{money(run.estimatedMonthlySave)}</td>
+                  <td>{money(Number(run.estimatedMonthlySave))}</td>
                   <td>
                     {run.status === "SCHEDULED" ? <RemoveAuditRunButton runId={run.id} /> : "-"}
                   </td>
