@@ -1,0 +1,59 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "timezone": "Asia/Ho_Chi_Minh",
+  "schedule": [
+    "before 6am on Monday"
+  ],
+  "prConcurrentLimit": 5,
+  "prHourlyLimit": 2,
+  "rangeStrategy": "bump",
+  "labels": [
+    "dependencies"
+  ],
+  "dependencyDashboard": true,
+  "packageRules": [
+    {
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "digest"
+      ],
+      "groupName": "non-major dependencies"
+    },
+    {
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "major dependencies",
+      "separateMajorMinor": true
+    },
+    {
+      "matchManagers": [
+        "npm"
+      ],
+      "postUpdateOptions": [
+        "npmDedupe"
+      ]
+    },
+    {
+      "matchPackageNames": [
+        "next",
+        "react",
+        "react-dom",
+        "prisma",
+        "@prisma/client"
+      ],
+      "groupName": "core framework dependencies"
+    },
+    {
+      "matchManagers": [
+        "dockerfile",
+        "docker-compose"
+      ],
+      "groupName": "docker dependencies"
+    }
+  ]
+}
