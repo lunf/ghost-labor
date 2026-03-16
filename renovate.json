@@ -16,19 +16,29 @@
   "dependencyDashboard": true,
   "packageRules": [
     {
+      "matchManagers": [
+        "npm"
+      ],
       "matchUpdateTypes": [
         "minor",
         "patch",
+        "pin",
         "digest"
       ],
-      "groupName": "non-major dependencies"
+      "groupName": "npm non-major dependencies"
     },
     {
-      "matchUpdateTypes": [
-        "major"
+      "matchManagers": [
+        "dockerfile",
+        "docker-compose"
       ],
-      "groupName": "major dependencies",
-      "separateMajorMinor": true
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "pin",
+        "digest"
+      ],
+      "groupName": "docker non-major dependencies"
     },
     {
       "matchManagers": [
@@ -46,14 +56,18 @@
         "prisma",
         "@prisma/client"
       ],
-      "groupName": "core framework dependencies"
+      "groupName": "core framework dependencies",
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ]
     },
     {
-      "matchManagers": [
-        "dockerfile",
-        "docker-compose"
+      "matchUpdateTypes": [
+        "major"
       ],
-      "groupName": "docker dependencies"
+      "separateMajorMinor": true,
+      "separateMultipleMajor": true
     }
   ]
 }
