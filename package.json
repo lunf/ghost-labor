@@ -10,6 +10,7 @@
     "build": "next build",
     "start": "prisma generate && next start",
     "lint": "next lint",
+    "test": "node --import tsx --test tests/**/*.test.ts",
     "worker": "prisma generate && tsx scripts/worker.ts",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
