@@ -1,8 +1,25 @@
-import { prisma } from "@/lib/db";
-import { DEFAULT_REPORT_MESSAGE_TEMPLATE } from "@/lib/report-template";
+import { prisma } from "@/lib/db/client";
+import { DEFAULT_REPORT_MESSAGE_TEMPLATE } from "@/lib/reporting/template";
 
-export async function getAppSettings() {
-  return prisma.appSetting.upsert({
+export async function bootstrapAppData() {
+  await prisma.loginUser.upsert({
+    where: {
+      username: "admin"
+    },
+    create: {
+      username: "admin",
+      password: "admin123",
+      fullName: "System Administrator",
+      role: "ADMIN"
+    },
+    update: {
+      password: "admin123",
+      fullName: "System Administrator",
+      role: "ADMIN"
+    }
+  });
+
+  await prisma.appSetting.upsert({
     where: {
       id: "default"
     },

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/db";
+import { prisma } from "@/lib/db/client";
 
 export async function GET() {
   await prisma.$queryRaw`SELECT 1`;

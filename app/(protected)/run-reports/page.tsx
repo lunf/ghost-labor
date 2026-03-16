@@ -1,5 +1,5 @@
-import { prisma } from "@/lib/db";
-import { requireAuth } from "@/lib/auth";
+import { requireAuth } from "@/lib/auth/session";
+import { prisma } from "@/lib/db/client";
 import { RunAuditButtonWithLabel } from "@/app/components/RunAuditButton";
 import { RemoveAuditRunButton } from "@/app/components/RemoveAuditRunButton";
 

@@ -1,4 +1,4 @@
-import { getBoss } from "../lib/boss";
+import { getBoss } from "../lib/jobs/queue";
 
 async function main() {
   await getBoss();

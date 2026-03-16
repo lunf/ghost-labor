@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/db";
+import { prisma } from "@/lib/db/client";
 import { pullConnectorUsers } from "@/lib/integrations/registry";
 import type { SyncConnectorResult } from "@/lib/integrations/types";
 
@@ -148,4 +148,3 @@ export async function syncAllConnectors() {
 }
 
 export type { ExternalUser, SyncConnectorResult } from "@/lib/integrations/types";
-

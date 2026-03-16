@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { getAuthenticatedUser } from "@/lib/auth";
-import { getLatestWastedSeats } from "@/lib/report";
+import { getAuthenticatedUser } from "@/lib/auth/session";
+import { getLatestWastedSeats } from "@/lib/reporting/audit";
 
 function escapeCsv(value: string) {
   const escaped = value.replace(/"/g, '""');

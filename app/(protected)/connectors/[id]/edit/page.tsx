@@ -2,9 +2,9 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { z } from "zod";
 import { EditConnectorForm } from "@/app/components/EditConnectorForm";
-import { requireAuth } from "@/lib/auth";
-import { prisma } from "@/lib/db";
-import { SUPPORTED_PROVIDERS } from "@/lib/providers";
+import { requireAuth } from "@/lib/auth/session";
+import { SUPPORTED_PROVIDERS } from "@/lib/connectors/providers";
+import { prisma } from "@/lib/db/client";
 
 const connectorSchema = z.object({
   id: z.string().min(1),

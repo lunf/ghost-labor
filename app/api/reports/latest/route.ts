@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getLatestReport } from "@/lib/report";
+import { getLatestReport } from "@/lib/reporting/audit";
 
 export async function GET() {
   const report = await getLatestReport();

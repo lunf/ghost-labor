@@ -1,11 +1,11 @@
 import type { AssignmentStatus, EmploymentStatus, Prisma } from "@prisma/client";
-import { prisma } from "@/lib/db";
-import type { WasteReason } from "@/types/report";
+import { prisma } from "@/lib/db/client";
 import { sendEmailMessage } from "@/lib/notifications/email";
 import { sendSlackMessage } from "@/lib/notifications/slack";
 import { sendTeamsMessage } from "@/lib/notifications/teams";
 import { sendTelegramMessage } from "@/lib/notifications/telegram";
-import { renderReportMessage } from "@/lib/report-template";
+import { renderReportMessage } from "@/lib/reporting/template";
+import type { WasteReason } from "@/types/report";
 
 const ACTIVE_ASSIGNMENT: AssignmentStatus = "ACTIVE";
 const INACTIVE_EMPLOYMENT: EmploymentStatus = "INACTIVE";

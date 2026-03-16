@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { getAuthenticatedUser } from "@/lib/auth";
+import { getAuthenticatedUser } from "@/lib/auth/session";
 import { sendTeamsMessage } from "@/lib/notifications/teams";
 
 const payloadSchema = z.object({
@@ -32,4 +32,3 @@ export async function POST(request: Request) {
 
   return NextResponse.json({ ok: true, message: "Teams test message sent successfully." });
 }
-

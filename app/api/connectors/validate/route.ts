@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { getAuthenticatedUser } from "@/lib/auth";
-import { validateConnectorConnection } from "@/lib/connectors";
+import { getAuthenticatedUser } from "@/lib/auth/session";
+import { validateConnectorConnection } from "@/lib/connectors/validation";
 
 const payloadSchema = z.object({
   provider: z.string().min(1),

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getLatestReport, getLatestWastedSeats } from "@/lib/report";
+import { getLatestReport, getLatestWastedSeats } from "@/lib/reporting/audit";
 
 function money(value: number) {
   return new Intl.NumberFormat("en-US", {

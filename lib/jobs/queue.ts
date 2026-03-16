@@ -1,7 +1,7 @@
 import PgBoss from "pg-boss";
-import { env } from "@/lib/env";
-import { createScheduledAuditRun, executeScheduledAuditRun } from "@/lib/report";
-import { prisma } from "@/lib/db";
+import { env } from "@/lib/config/env";
+import { prisma } from "@/lib/db/client";
+import { createScheduledAuditRun, executeScheduledAuditRun } from "@/lib/reporting/audit";
 
 const QUEUE = {
   runAudit: "audit:run"

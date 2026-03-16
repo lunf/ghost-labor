@@ -1,4 +1,4 @@
-import { bootstrapAppData } from "../lib/bootstrap";
+import { bootstrapAppData } from "../lib/bootstrap/seed-defaults";
 
 async function main() {
   await bootstrapAppData();

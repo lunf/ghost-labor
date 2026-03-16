@@ -1,8 +1,8 @@
-import { prisma } from "@/lib/db";
+import { prisma } from "@/lib/db/client";
 import Link from "next/link";
 import { revalidatePath } from "next/cache";
-import { requireAuth } from "@/lib/auth";
-import { validateConnectorConnection } from "@/lib/connectors";
+import { requireAuth } from "@/lib/auth/session";
+import { validateConnectorConnection } from "@/lib/connectors/validation";
 
 function formatStatus(status: "DRAFT" | "CONNECTED" | "ERROR") {
   return status.toLowerCase();
