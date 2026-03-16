@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { getAuthenticatedUser } from "@/lib/auth/session";
+import { getAuthenticatedUser } from "@/lib/auth";
 import { sendTelegramMessage } from "@/lib/notifications/telegram";
 
 const payloadSchema = z.object({

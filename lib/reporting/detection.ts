@@ -1,5 +1,5 @@
 import type { EmploymentStatus, Prisma } from "@prisma/client";
-import type { WasteReason } from "@/types/report";
+import type { WasteReason } from "@/types/reporting";
 
 const INACTIVE_EMPLOYMENT: EmploymentStatus = "INACTIVE";
 

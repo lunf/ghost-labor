@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { syncAllConnectors } from "@/lib/integrations/index";
+import { syncConnectors } from "@/lib/connectors";
 
 export async function POST() {
-  const summary = await syncAllConnectors();
+  const summary = await syncConnectors();
 
   return NextResponse.json({
     ok: true,

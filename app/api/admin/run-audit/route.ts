@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { getAuthenticatedUser } from "@/lib/auth/session";
-import { enqueueAuditRun } from "@/lib/jobs/queue";
+import { getAuthenticatedUser } from "@/lib/auth";
+import { enqueueAuditRun } from "@/lib/jobs";
 
 export async function POST() {
   const user = await getAuthenticatedUser();

@@ -1,8 +1,11 @@
-import { prisma } from "@/lib/db/client";
 import Link from "next/link";
 import { revalidatePath } from "next/cache";
-import { requireAuth } from "@/lib/auth/session";
-import { validateConnectorConnection } from "@/lib/connectors/validation";
+import { requireAuth } from "@/lib/auth";
+import {
+  deleteConnector,
+  getConnectorsTableData,
+  revalidateConnector
+} from "@/lib/connectors";
 
 function formatStatus(status: "DRAFT" | "CONNECTED" | "ERROR") {
   return status.toLowerCase();
@@ -34,50 +37,7 @@ export default async function ConnectorsPage() {
     if (!id) {
       return;
     }
-
-    const connector = await prisma.saaSApp.findUnique({
-      where: { id },
-      select: {
-        id: true,
-        provider: true,
-        apiBaseUrl: true,
-        apiToken: true
-      }
-    });
-
-    if (!connector) {
-      return;
-    }
-
-    if (!connector.apiBaseUrl || !connector.apiToken) {
-      await prisma.saaSApp.update({
-        where: { id: connector.id },
-        data: {
-          connectorStatus: "DRAFT",
-          lastValidationAt: new Date(),
-          lastValidationMessage: "Missing API base URL or token."
-        }
-      });
-
-      revalidatePath("/connectors");
-      return;
-    }
-
-    const result = await validateConnectorConnection({
-      provider: connector.provider,
-      apiBaseUrl: connector.apiBaseUrl,
-      apiToken: connector.apiToken
-    });
-
-    await prisma.saaSApp.update({
-      where: { id: connector.id },
-      data: {
-        connectorStatus: result.ok ? "CONNECTED" : "ERROR",
-        lastSuccessfulSyncAt: result.ok ? new Date(result.checkedAt) : undefined,
-        lastValidationAt: new Date(result.checkedAt),
-        lastValidationMessage: result.message
-      }
-    });
+    await revalidateConnector(id);
 
     revalidatePath("/connectors");
   }
@@ -92,25 +52,12 @@ export default async function ConnectorsPage() {
       return;
     }
 
-    await prisma.saaSApp.delete({
-      where: { id }
-    });
+    await deleteConnector(id);
 
     revalidatePath("/connectors");
   }
 
-  const apps = await prisma.saaSApp.findMany({
-    orderBy: {
-      name: "asc"
-    },
-    select: {
-      id: true,
-      name: true,
-      connectorStatus: true,
-      provider: true,
-      lastSuccessfulSyncAt: true
-    }
-  });
+  const apps = await getConnectorsTableData();
 
   return (
     <main>

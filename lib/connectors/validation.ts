@@ -1,16 +1,5 @@
-import { prisma } from "@/lib/db/client";
-
-export type ConnectorValidationInput = {
-  provider: string;
-  apiBaseUrl: string;
-  apiToken: string;
-};
-
-export type ConnectorValidationResult = {
-  ok: boolean;
-  message: string;
-  checkedAt: string;
-};
+import { prisma } from "@/lib/db";
+import type { ConnectorValidationInput, ConnectorValidationResult } from "@/types/connectors";
 
 export async function validateConnectorConnection(
   input: ConnectorValidationInput
@@ -90,3 +79,5 @@ export async function listConnectorRows() {
     }
   });
 }
+
+export type { ConnectorValidationInput, ConnectorValidationResult } from "@/types/connectors";

@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/db/client";
+import { prisma } from "@/lib/db";
 import { pullConnectorUsers } from "@/lib/integrations/registry";
 import type { SyncConnectorResult } from "@/lib/integrations/types";
 

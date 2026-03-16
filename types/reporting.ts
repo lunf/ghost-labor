@@ -3,13 +3,13 @@ export type WasteReason =
   | "employee_inactive"
   | "inactive_for_threshold";
 
-export interface FindingSummary {
+export type FindingSummary = {
   appName: string;
   count: number;
   monthlyWaste: number;
-}
+};
 
-export interface LatestReportResponse {
+export type LatestReportResponse = {
   runId: string;
   status: string;
   startedAt: string;
@@ -17,4 +17,11 @@ export interface LatestReportResponse {
   totalFindings: number;
   estimatedMonthlySave: number;
   byApp: FindingSummary[];
-}
+};
+
+export type WastedSeatRow = {
+  name: string;
+  email: string;
+  saasProvider: string;
+  lastUsedService: string;
+};

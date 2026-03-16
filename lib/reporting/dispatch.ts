@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/db/client";
+import { prisma } from "@/lib/db";
 import { sendEmailMessage } from "@/lib/notifications/email";
 import { sendSlackMessage } from "@/lib/notifications/slack";
 import { sendTeamsMessage } from "@/lib/notifications/teams";

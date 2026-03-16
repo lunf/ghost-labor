@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { getAuthenticatedUser } from "@/lib/auth/session";
-import { prisma } from "@/lib/db/client";
+import { getAuthenticatedUser } from "@/lib/auth";
+import { prisma } from "@/lib/db";
 
 export async function DELETE(
   _request: Request,

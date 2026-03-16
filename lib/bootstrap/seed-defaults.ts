@@ -1,5 +1,5 @@
-import { prisma } from "@/lib/db/client";
-import { DEFAULT_REPORT_MESSAGE_TEMPLATE } from "@/lib/reporting/template";
+import { prisma } from "@/lib/db";
+import { DEFAULT_REPORT_MESSAGE_TEMPLATE } from "@/lib/reporting";
 
 export async function bootstrapAppData() {
   await prisma.loginUser.upsert({

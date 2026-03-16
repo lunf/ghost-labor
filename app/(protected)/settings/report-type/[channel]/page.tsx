@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { requireAuth } from "@/lib/auth/session";
-import { prisma } from "@/lib/db/client";
-import { getAppSettings } from "@/lib/settings/store";
+import { requireAuth } from "@/lib/auth";
+import { prisma } from "@/lib/db";
+import { getAppSettings } from "@/lib/settings";
 import { TestEmailButton } from "@/app/components/TestEmailButton";
 import { TestSlackButton } from "@/app/components/TestSlackButton";
 import { TestTelegramButton } from "@/app/components/TestTelegramButton";

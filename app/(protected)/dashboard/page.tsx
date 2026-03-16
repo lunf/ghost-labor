@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getLatestReport, getLatestWastedSeats } from "@/lib/reporting/audit";
+import { getDashboardReport } from "@/lib/reporting";
 
 function money(value: number) {
   return new Intl.NumberFormat("en-US", {
@@ -35,8 +35,7 @@ export default async function DashboardPage({
 }) {
   const params = await searchParams;
   const selectedProvider = params.provider ?? "";
-  const report = await getLatestReport();
-  const wastedSeats = await getLatestWastedSeats(selectedProvider);
+  const { report, wastedSeats } = await getDashboardReport(selectedProvider);
   const exportHref = selectedProvider
     ? `/api/reports/wasted-seats/export?provider=${encodeURIComponent(selectedProvider)}`
     : "/api/reports/wasted-seats/export";

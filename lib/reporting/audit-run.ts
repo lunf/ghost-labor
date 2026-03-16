@@ -1,8 +1,8 @@
 import type { AssignmentStatus, Prisma } from "@prisma/client";
-import { prisma } from "@/lib/db/client";
+import { prisma } from "@/lib/db";
 import { evaluateSeat, toNumber } from "@/lib/reporting/detection";
 import { dispatchCompletedAuditNotifications } from "@/lib/reporting/dispatch";
-import type { WasteReason } from "@/types/report";
+import type { WasteReason } from "@/types/reporting";
 
 const ACTIVE_ASSIGNMENT: AssignmentStatus = "ACTIVE";
 

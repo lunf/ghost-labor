@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { getAuthenticatedUser } from "@/lib/auth/session";
-import { getLatestWastedSeats } from "@/lib/reporting/audit";
+import { getAuthenticatedUser } from "@/lib/auth";
+import { getWastedSeatsReport } from "@/lib/reporting";
 
 function escapeCsv(value: string) {
   const escaped = value.replace(/"/g, '""');
@@ -16,7 +16,7 @@ export async function GET(request: Request) {
 
   const url = new URL(request.url);
   const provider = url.searchParams.get("provider") ?? undefined;
-  const report = await getLatestWastedSeats(provider);
+  const report = await getWastedSeatsReport(provider);
 
   const header = "name,email,saas_provider,last_used_service";
   const lines = report.rows.map((row) =>

@@ -1,14 +1,8 @@
-import { prisma } from "@/lib/db/client";
+import { prisma } from "@/lib/db";
 import { toNumber } from "@/lib/reporting/detection";
+import type { LatestReportResponse, WastedSeatRow } from "@/types/reporting";
 
-export type WastedSeatRow = {
-  name: string;
-  email: string;
-  saasProvider: string;
-  lastUsedService: string;
-};
-
-export async function getLatestReport() {
+export async function getLatestReport(): Promise<LatestReportResponse | null> {
   const run = await prisma.auditRun.findFirst({
     orderBy: {
       startedAt: "desc"

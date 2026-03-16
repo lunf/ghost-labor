@@ -2,9 +2,8 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { NewConnectorForm } from "@/app/components/NewConnectorForm";
-import { requireAuth } from "@/lib/auth/session";
-import { SUPPORTED_PROVIDERS, isSupportedProvider } from "@/lib/connectors/providers";
-import { prisma } from "@/lib/db/client";
+import { requireAuth } from "@/lib/auth";
+import { createConnector, getConnectorProviderOptions } from "@/lib/connectors";
 
 const connectorSchema = z.object({
   name: z.string().min(1),
@@ -28,7 +27,7 @@ export default async function NewConnectorPage({
 }) {
   await requireAuth();
   const params = await searchParams;
-  const providerOptions = [...SUPPORTED_PROVIDERS];
+  const providerOptions = await getConnectorProviderOptions();
 
   async function createConnectorAction(formData: FormData) {
     "use server";
@@ -51,35 +50,13 @@ export default async function NewConnectorPage({
       redirect("/connectors/new?error=invalid_input");
     }
 
-    if (!isSupportedProvider(parsed.data.provider)) {
+    const result = await createConnector(parsed.data);
+
+    if (!result.ok && result.reason === "invalid_provider") {
       redirect("/connectors/new?error=invalid_provider");
     }
 
-    const statusByValidation = {
-      success: "CONNECTED",
-      error: "ERROR",
-      idle: "DRAFT"
-    } as const;
-
-    const connectorStatus = statusByValidation[parsed.data.validationState];
-
-    try {
-      await prisma.saaSApp.create({
-        data: {
-          name: parsed.data.name,
-          slug: parsed.data.slug,
-          provider: parsed.data.provider,
-          apiBaseUrl: parsed.data.apiBaseUrl,
-          apiToken: parsed.data.apiToken,
-          connectorStatus,
-          lastSuccessfulSyncAt: connectorStatus === "CONNECTED" ? new Date() : null,
-          lastValidationAt: new Date(),
-          lastValidationMessage: parsed.data.validationMessage ?? null,
-          monthlySeatPrice: parsed.data.monthlySeatPrice,
-          inactivityDays: parsed.data.inactivityDays
-        }
-      });
-    } catch {
+    if (!result.ok && result.reason === "slug_exists") {
       redirect("/connectors/new?error=slug_exists");
     }
 

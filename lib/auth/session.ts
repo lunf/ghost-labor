@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { prisma } from "@/lib/db/client";
+import { prisma } from "@/lib/db";
 
 const SESSION_COOKIE = "ghost_session";
 

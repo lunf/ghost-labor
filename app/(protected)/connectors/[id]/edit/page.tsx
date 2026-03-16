@@ -2,9 +2,12 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { z } from "zod";
 import { EditConnectorForm } from "@/app/components/EditConnectorForm";
-import { requireAuth } from "@/lib/auth/session";
-import { SUPPORTED_PROVIDERS } from "@/lib/connectors/providers";
-import { prisma } from "@/lib/db/client";
+import { requireAuth } from "@/lib/auth";
+import {
+  getConnectorById,
+  getConnectorProviderOptions,
+  updateConnector
+} from "@/lib/connectors";
 
 const connectorSchema = z.object({
   id: z.string().min(1),
@@ -33,19 +36,7 @@ export default async function EditConnectorPage({
   const { id } = await params;
   const search = await searchParams;
 
-  const connector = await prisma.saaSApp.findUnique({
-    where: { id },
-    select: {
-      id: true,
-      name: true,
-      slug: true,
-      provider: true,
-      apiBaseUrl: true,
-      apiToken: true,
-      monthlySeatPrice: true,
-      inactivityDays: true
-    }
-  });
+  const connector = await getConnectorById(id);
 
   if (!connector) {
     notFound();
@@ -73,34 +64,9 @@ export default async function EditConnectorPage({
       redirect(`/connectors/${id}/edit?error=invalid_input`);
     }
 
-    const statusByValidation = {
-      success: "CONNECTED",
-      error: "ERROR",
-      idle: "DRAFT"
-    } as const;
+    const result = await updateConnector(parsed.data);
 
-    const connectorStatus = statusByValidation[parsed.data.validationState];
-
-    try {
-      await prisma.saaSApp.update({
-        where: {
-          id: parsed.data.id
-        },
-        data: {
-          name: parsed.data.name,
-          slug: parsed.data.slug,
-          provider: parsed.data.provider,
-          apiBaseUrl: parsed.data.apiBaseUrl,
-          apiToken: parsed.data.apiToken,
-          monthlySeatPrice: parsed.data.monthlySeatPrice,
-          inactivityDays: parsed.data.inactivityDays,
-          connectorStatus,
-          lastSuccessfulSyncAt: connectorStatus === "CONNECTED" ? new Date() : null,
-          lastValidationAt: new Date(),
-          lastValidationMessage: parsed.data.validationMessage ?? null
-        }
-      });
-    } catch {
+    if (!result.ok) {
       redirect(`/connectors/${id}/edit?error=save_failed`);
     }
 
@@ -113,9 +79,7 @@ export default async function EditConnectorPage({
       : search.error === "invalid_input"
         ? "Please provide valid connector values."
         : undefined;
-  const providerOptions = Array.from(new Set([...SUPPORTED_PROVIDERS, connector.provider])).sort((a, b) =>
-    a.localeCompare(b)
-  );
+  const providerOptions = await getConnectorProviderOptions(connector.provider);
 
   return (
     <main>

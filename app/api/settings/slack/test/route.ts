@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { getAuthenticatedUser } from "@/lib/auth/session";
+import { getAuthenticatedUser } from "@/lib/auth";
 import { sendSlackMessage } from "@/lib/notifications/slack";
 
 const payloadSchema = z.object({

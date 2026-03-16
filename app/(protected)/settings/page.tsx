@@ -1,9 +1,9 @@
 import { revalidatePath } from "next/cache";
 import Link from "next/link";
-import { requireAuth } from "@/lib/auth/session";
-import { prisma } from "@/lib/db/client";
-import { DEFAULT_REPORT_MESSAGE_TEMPLATE } from "@/lib/reporting/template";
-import { getAppSettings } from "@/lib/settings/store";
+import { requireAuth } from "@/lib/auth";
+import { prisma } from "@/lib/db";
+import { DEFAULT_REPORT_MESSAGE_TEMPLATE } from "@/lib/reporting";
+import { getAppSettings } from "@/lib/settings";
 const SCHEDULE_OPTIONS = [6, 12, 24, 48, 72];
 
 export default async function SettingsPage({
