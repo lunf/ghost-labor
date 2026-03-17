@@ -4,16 +4,13 @@
     "config:recommended"
   ],
   "timezone": "Asia/Ho_Chi_Minh",
-  "schedule": [
-    "before 6am on Monday"
-  ],
-  "prConcurrentLimit": 5,
-  "prHourlyLimit": 2,
-  "rangeStrategy": "bump",
   "labels": [
     "dependencies"
   ],
-  "dependencyDashboard": true,
+  "rangeStrategy": "bump",
+  "lockFileMaintenance": {
+    "enabled": true
+  },
   "packageRules": [
     {
       "matchManagers": [
@@ -44,11 +41,6 @@
       "matchManagers": [
         "npm"
       ],
-      "postUpdateOptions": [
-        "npmDedupe"
-      ]
-    },
-    {
       "matchPackageNames": [
         "next",
         "react",
@@ -56,18 +48,11 @@
         "prisma",
         "@prisma/client"
       ],
-      "groupName": "core framework dependencies",
       "matchUpdateTypes": [
         "minor",
         "patch"
-      ]
-    },
-    {
-      "matchUpdateTypes": [
-        "major"
       ],
-      "separateMajorMinor": true,
-      "separateMultipleMajor": true
+      "groupName": "core framework dependencies"
     }
   ]
 }
