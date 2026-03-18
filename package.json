@@ -17,11 +17,11 @@
     "db:seed": "prisma generate && tsx prisma/seed.ts"
   },
   "dependencies": {
-    "@prisma/client": "^6.4.1",
-    "next": "^15.1.0",
+    "@prisma/client": "^6.19.2",
+    "next": "^15.5.13",
     "pg-boss": "^10.2.1",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "zod": "^3.24.2",
     "nodemailer": "^6.9.16"
   },
@@ -31,7 +31,7 @@
     "@types/react-dom": "^19.0.4",
     "eslint": "^9.21.0",
     "eslint-config-next": "^15.1.0",
-    "prisma": "^6.4.1",
+    "prisma": "^6.19.2",
     "tsx": "^4.19.3",
     "typescript": "^5.7.3",
     "@types/nodemailer": "^6.4.17"
