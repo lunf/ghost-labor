@@ -10,7 +10,7 @@
     "build": "next build",
     "start": "prisma generate && next start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "prepare": "npm run setup:hooks",
+    "prepare": "test -f scripts/setup-git-hooks.sh && npm run setup:hooks || exit 0",
     "setup:hooks": "sh scripts/setup-git-hooks.sh",
     "test": "node --import tsx --test tests/**/*.test.ts",
     "worker": "prisma generate && tsx scripts/worker.ts",
