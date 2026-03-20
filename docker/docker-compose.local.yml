@@ -8,7 +8,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ghost_labor_db_data:/var/lib/postgresql/data
+      - ghost_labor_db_data:/var/lib/postgresql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d ghost_labor"]
       interval: 5s

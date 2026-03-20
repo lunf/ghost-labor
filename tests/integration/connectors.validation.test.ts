@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { validateConnectorConnection } from "@/lib/connectors";
+import { validateConnectorConnection } from "@/lib/connectors/validation";
 import { withMockedFetch } from "@/tests/helpers/fetch-mock";
 
 test("validateConnectorConnection succeeds against health endpoint", async () => {

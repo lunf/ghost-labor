@@ -1,4 +1,3 @@
-import { prisma } from "@/lib/db";
 import type { ConnectorValidationInput, ConnectorValidationResult } from "@/types/connectors";
 
 export async function validateConnectorConnection(
@@ -66,6 +65,8 @@ export async function validateConnectorConnection(
 }
 
 export async function listConnectorRows() {
+  const { prisma } = await import("@/lib/db");
+
   return prisma.saaSApp.findMany({
     orderBy: {
       name: "asc"

@@ -1,4 +1,4 @@
-import PgBoss from "pg-boss";
+import { PgBoss } from "pg-boss";
 import { env } from "@/lib/config";
 import { prisma } from "@/lib/db";
 import { createScheduledAuditRun, executeScheduledAuditRun } from "@/lib/reporting";
@@ -8,9 +8,7 @@ const QUEUE = {
 } as const;
 
 declare global {
-  // eslint-disable-next-line no-var
   var boss: PgBoss | undefined;
-  // eslint-disable-next-line no-var
   var bossStarted: boolean | undefined;
 }
 

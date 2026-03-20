@@ -9,7 +9,7 @@
     "dev": "prisma generate && next dev",
     "build": "next build",
     "start": "prisma generate && next start",
-    "lint": "next lint",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "prepare": "npm run setup:hooks",
     "setup:hooks": "sh scripts/setup-git-hooks.sh",
     "test": "node --import tsx --test tests/**/*.test.ts",
@@ -19,24 +19,26 @@
     "db:seed": "prisma generate && tsx prisma/seed.ts"
   },
   "dependencies": {
+    "@prisma/adapter-pg": "^7.5.0",
     "@prisma/client": "^7.5.0",
     "next": "^16.2.0",
+    "nodemailer": "^8.0.3",
+    "pg": "^8.20.0",
     "pg-boss": "^12.14.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "zod": "^4.3.6",
-    "nodemailer": "^8.0.3"
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@types/node": "^24.12.0",
+    "@types/nodemailer": "^7.0.11",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "eslint": "^10.0.3",
+    "eslint": "^9.39.4",
     "eslint-config-next": "^16.2.0",
     "prisma": "^7.5.0",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3",
-    "@types/nodemailer": "^7.0.11"
+    "typescript": "^5.9.3"
   },
   "prisma": {
     "seed": "prisma generate && tsx prisma/seed.ts"
