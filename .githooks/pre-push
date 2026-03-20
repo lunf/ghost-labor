@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+set -e
+
+echo "Running pre-push checks..."
+npm test
+npm run lint
+npm run build

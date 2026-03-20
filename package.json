@@ -10,6 +10,8 @@
     "build": "next build",
     "start": "prisma generate && next start",
     "lint": "next lint",
+    "prepare": "npm run setup:hooks",
+    "setup:hooks": "sh scripts/setup-git-hooks.sh",
     "test": "node --import tsx --test tests/**/*.test.ts",
     "worker": "prisma generate && tsx scripts/worker.ts",
     "db:generate": "prisma generate",
