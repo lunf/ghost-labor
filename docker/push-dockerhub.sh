@@ -4,7 +4,7 @@ set -euo pipefail
 # Usage:
 #   ./docker/push-dockerhub.sh <dockerhub_user> [version]
 # Example:
-#   ./docker/push-dockerhub.sh johndoe 1.0.0
+#   ./docker/push-dockerhub.sh nhatcuong 1.0.0
 
 if [[ $# -lt 1 ]]; then
   echo "Usage: $0 <dockerhub_user> [version]"

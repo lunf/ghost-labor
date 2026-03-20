@@ -29,6 +29,12 @@ Finance teams can see immediate ROI with actionable findings like:
 ## Sample UI
 ![Dashboard Sample](images/dashboard.png)
 
+## Docker setup
+[Docker Hub image](https://hub.docker.com/r/nhatcuong/ghost-labor)
+
+```bash
+  docker pull nhatcuong/ghost-labor:latest
+```
 ## Local setup
 1. Start Postgres with Docker Compose (required before Prisma migrate):
    ```bash
