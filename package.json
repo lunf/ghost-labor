@@ -34,7 +34,7 @@
     "prisma": "^6.19.2",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
-    "@types/nodemailer": "^6.4.23"
+    "@types/nodemailer": "^7.0.11"
   },
   "prisma": {
     "seed": "prisma generate && tsx prisma/seed.ts"
