@@ -21,7 +21,7 @@
   "dependencies": {
     "@prisma/adapter-pg": "^7.5.0",
     "@prisma/client": "^7.5.0",
-    "next": "^16.2.0",
+    "next": "^16.2.1",
     "nodemailer": "^8.0.3",
     "pg": "^8.20.0",
     "pg-boss": "^12.14.0",
